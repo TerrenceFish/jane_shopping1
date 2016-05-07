@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8"/>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+<style>
+	ul{
+		float:left;
+		list-style: none;
+	}
+	li{
+		float:left;
+	}
+</style>
+</head>
+<body>
+<body>
+  <div id="div">
+    <ul>
+      <li>☆</li>
+      <li>☆</li>
+      <li>☆</li>
+      <li>☆</li>
+      <li>☆</li>
+    </ul>
+  </div>
+  <p id="p"></p>
+  <p id="score"></p>
+<script type="text/javascript">
+$(function () {
+  //为所有的li标签绑定mouseout和mouseover事件。bind({事件名：function(){},事件名：function(){}})的方法绑定多个事件
+  $("#div li").bind({
+ mouseout:function () {
+   $(this).css("color", "black").html("☆").prevAll().css("color", "black").html("☆")
+ },
+ mouseover: function () {
+   $(this).css("color", "red").html("★").prevAll().css("color", "red").html("★")
+ }
+  });
+  //=实时显示分数.【index】搜索匹配的元素，并返回相应元素的索引值，从0开始计数。
+   $("#div li").mouseover(function () {
+   $("#p").html(parseInt( $(this).index("#div li"))+1);
+ });
+  //鼠标按下时，确定分数。额，就不更改了，大局已定。
+ $("#div li").mousedown(function () {
+   $("#score").html(("你选择的分数是" + (parseInt($(this).index("#div li")) + 1)));
+   $(this).css("color", "red").html("★").prevAll().css("color", "red").html("★")
+   //全部li标签的绑定事件全部清除--unbind方法可以加参数清除特定的事件。不加全部清除
+   $(this).unbind().prevAll().unbind().nextAll().unbind();
+ });
+  })
+</script>
+</body>
+</html>
